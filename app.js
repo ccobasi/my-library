@@ -1,3 +1,5 @@
+const submit = document.getElementById('submit');
+
 let myLibrary = [];
 
 function Book(title, author, pages, read = false) {
@@ -22,5 +24,56 @@ function displayBook(newBook){
     <td><a href="#" class="btn btn-danger btn-sm delete"><i class="fas fa-trash"></a></td>`;
 
     list.appendChild(row);
+
+    const deleteBook(el){
+        if(el.classList.contains('delete')){
+            el.parentElement.parentElement.remove();
+        }
+    }
+
+    document.querySelector('#book-list').addEventListener('click',(e) => {
+        myLibrary.deleteBook(e.target);
+    })
+
 }
+
+function createBook(e) {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+  
+    e.preventDefault();
+  
+    function validateForm(title, author, pages) {
+      let newBook;
+      if (title === '' || author === '' || pages === '') {
+        alert('please fill all the form');
+      } else {
+        newBook = new Book(title, author, pages);
+        addBookToLibrary(newBook);
+  
+        const bookObj = {
+          title: newBook.title,
+          author: newBook.author,
+          pages: newBook.pages,
+          read: newBook.read,
+        };
+  
+        // Put the object into storage
+        const bookIndex = localStorage.length === 0 ? 0 : localStorage.length;
+        localStorage.setItem(bookIndex.toString(), JSON.stringify(bookObj));
+  
+        const form = document.getElementById('form');
+        form.reset();
+        displayBook(newBook);
+      }
+    }
+    validateForm(title, author, pages);
+  }
+  
+  submit.addEventListener('click', (e) => createBook(e));
+  
+
+
+  
     
