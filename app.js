@@ -20,7 +20,7 @@ function displayBook(newBook) {
     <td>${newBook.title}</td>
     <td>${newBook.author}</td>
     <td>${newBook.pages}</td>
-    <td><a href="#" id="unread" class="btn btn-warning btn-sm unread">Unread</a></td>
+    <td><a href="#" id="status" class="btn btn-warning btn-sm unread">Unread</a></td>
     <td><a href="#" class="btn btn-danger btn-sm delete">Delete</a></td>`;
 
   list.appendChild(row);
@@ -37,15 +37,12 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 });
 
 document.querySelector('#book-list').addEventListener('click', (e) => {
-  if (e.target.classList.contains('unread')) {
+  if (e.target.textContent === 'Unread') {
     e.target.setAttribute('class', ' btn btn-success');
     e.target.textContent = 'Read';
-  } else if (e.target.classList.contains('btn-success')) {
+  } else if (e.target.classList.textContent === 'Read') {
     e.target.setAttribute('class', ' btn btn-warning');
     e.target.textContent = 'Unread';
-  } else {
-    e.target.setAttribute('class', ' btn btn-success');
-    e.target.textContent = 'Read';
   }
 });
 
